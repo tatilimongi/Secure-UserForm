@@ -2,7 +2,7 @@
 
 ## Project Overview 🚀
 
-**Secure User Form** is a web application designed as part of a secure development course. The project focuses on building a user authentication system that ensures the security of sensitive data such as user credentials. It employs best practices in securing authentication processes and implementing security measures such as token-based authentication, secure password storage, and validation.
+**Secure User Form** is a web application designed as part of a Secure Development course. The project focuses on building a user authentication system that ensures the security of sensitive data such as user credentials. It employs best practices in securing authentication processes and implementing security measures such as token-based authentication, secure password storage, and validation.
 
 This project was developed as a hands-on activity to apply concepts learned in the **Secure Development** course. It provides a comprehensive overview of securing web applications, including but not limited to user authentication, authorization, and data protection.
 
