@@ -20,7 +20,7 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginDTO loginDTO) {
 		try {
-			boolean userExists = UserController.users.stream()
+			boolean userExists = UserController.getUsers().stream()
 					.anyMatch(user -> user.getEmail().equalsIgnoreCase(loginDTO.getEmail()) &&
 							user.getPassword().equals(loginDTO.getPassword()));
 

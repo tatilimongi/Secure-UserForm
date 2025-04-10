@@ -13,7 +13,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-	public static List<UserDTO> users = new ArrayList<>();
+	private static final List<UserDTO> users = new ArrayList<>();
+
+	public static List<UserDTO> getUsers() {
+		return users;
+	}
 
 	@PostMapping(consumes = "application/json", produces = "application/json;charset=UTF-8")
 	public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) {

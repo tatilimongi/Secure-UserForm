@@ -3,17 +3,18 @@ package com.example.userform.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Component
 public class JwtUtil {
 
 	private final String SECRET_KEY = "MySuperSecretKeyThatNeedsToBeVeryLongToBeSecure123!";
-
 	private final long EXPIRATION_TIME = 1000 * 60 * 60;
-
 	private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
 	public String generateToken(String email) {
@@ -44,5 +45,10 @@ public class JwtUtil {
 		} catch (JwtException | IllegalArgumentException e) {
 			return false;
 		}
+	}
+
+	public Authentication getAuthentication(String token) {
+		String email = extractEmail(token);
+		return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
 	}
 }

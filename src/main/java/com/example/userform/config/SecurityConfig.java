@@ -20,6 +20,7 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
 		CorsConfiguration corsConfig = new CorsConfiguration();
 		corsConfig.addAllowedOrigin("*");
 		corsConfig.addAllowedMethod("*");
@@ -30,9 +31,8 @@ public class SecurityConfig {
 		http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register").permitAll()
-						.requestMatchers("/welcome.html").authenticated()
-						.anyRequest().authenticated() // Requer autenticação para qualquer outra requisição
+						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html").permitAll()
+						.anyRequest().authenticated()
 				)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 				.formLogin(form -> form.disable())

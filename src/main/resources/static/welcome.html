@@ -23,25 +23,6 @@
         window.location.href = "/login.html";
     }
 
-    fetch('/welcome', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Unauthorized access");
-        }
-        return response.json();
-    })
-    .then(data => {
-    })
-    .catch(error => {
-        console.error(error);
-        window.location.href = "/login.html";
-    });
-
     document.querySelector('.message').textContent = "🎉 Congratulations, your account has been created successfully!";
 
     const logoutButton = document.getElementById("logoutButton");

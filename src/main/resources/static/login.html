@@ -43,9 +43,16 @@
                 body: JSON.stringify({ email, password }),
             });
 
+            if (!response.ok) {
+                const result = await response.json();
+                message.textContent = "❌ Login failed: " + (result.message || "Invalid credentials.");
+                message.className = "error";
+                return;
+            }
+
             const result = await response.json();
 
-            if (response.ok && result.token) {
+            if (result.token) {
                 localStorage.setItem("jwt", result.token);
                 message.textContent = "✅ Login successful! Redirecting...";
                 message.className = "success";
@@ -53,7 +60,7 @@
                     window.location.href = "/welcome.html";
                 }, 1000);
             } else {
-                message.textContent = "❌ Login failed: " + (result.message || "Invalid credentials.");
+                message.textContent = "❌ Login failed: Invalid credentials.";
                 message.className = "error";
             }
         } catch (error) {
