@@ -17,13 +17,38 @@ public class JwtUtil {
 	private final long EXPIRATION_TIME = 1000 * 60 * 60;
 	private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
-	public String generateToken(String email) {
+	public String generateToken(String email, String role) {
 		return Jwts.builder()
 				.setSubject(email)
+				.claim("role", role)
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
+	}
+
+	public boolean isTokenExpired(String token) {
+		try {
+			Date expirationDate = Jwts.parserBuilder()
+					.setSigningKey(key)
+					.build()
+					.parseClaimsJws(token)
+					.getBody()
+					.getExpiration();
+
+			return expirationDate.before(new Date());
+		} catch (JwtException | IllegalArgumentException e) {
+			return false;
+		}
+	}
+
+	public String extractRole(String token) {
+		return Jwts.parserBuilder()
+				.setSigningKey(key)
+				.build()
+				.parseClaimsJws(token)
+				.getBody()
+				.get("role", String.class);
 	}
 
 	public String extractEmail(String token) {

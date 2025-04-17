@@ -1,13 +1,18 @@
 package com.example.userform.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/")
 public class HelloController {
 
-	@GetMapping("/hello")
-	public String hello() {
-		return "Hello! You are authenticated with JWT 🎉";
+	@GetMapping("/admin/hello")
+	public String adminHello() {
+		return "Hello, Admin!";
+	}
+
+	@GetMapping("/user/hello")
+	public String userHello() {
+		return "Hello, Authenticated User!";
 	}
 }
