@@ -34,13 +34,18 @@ jobs:
             --name secure-userform-container \
             secure-userform:latest
 
-      - name: Wait for the application to start
+      - name: Wait for the application to start (retry curl)
         run: |
-          echo "Waiting for the app to be ready..."
-          sleep 20
-
-      - name: Verify the application is running
-        run: curl --fail http://localhost:8080/actuator/health || exit 1
+          for i in {1..30}; do
+            echo "Attempt $i: Checking if app is up..."
+            if curl --fail http://localhost:8080/actuator/health; then
+              echo "App is up!"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "App failed to start within expected time."
+          exit 1
 
       - name: Print health check result
         run: curl http://localhost:8080/actuator/health
