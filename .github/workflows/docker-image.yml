@@ -26,17 +26,17 @@ jobs:
       - name: Build Docker image
         run: docker build -t secure-userform:latest .
 
-      - name: Create a custom Docker network
-        run: docker network create --driver bridge my-network
-
       - name: Run Docker container with Spring profile
         run: |
           docker run -d \
             -e SPRING_PROFILES_ACTIVE=prod \
             -p 8080:8080 \
             --name secure-userform-container \
-            --network my-network \
             secure-userform:latest
+          docker logs secure-userform-container 
+
+      - name: Check Docker version
+        run: docker --version
 
       - name: Wait for the application to start (retry curl)
         run: |
@@ -46,6 +46,7 @@ jobs:
               echo "App is up!"
               exit 0
             fi
+            curl -v http://127.0.0.1:8080/actuator/health  
             sleep 5
           done
           echo "App failed to start within expected time."
@@ -56,8 +57,8 @@ jobs:
 
       - name: Get Docker container logs
         run: |
-          docker ps -a
-          docker logs secure-userform-container
+          docker ps -a  # Verifica todos os contêineres
+          docker logs secure-userform-container 
 
       - name: Check Docker daemon status
         run: sudo systemctl status docker
