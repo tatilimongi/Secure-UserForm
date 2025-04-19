@@ -32,8 +32,7 @@ public class SecurityConfig {
 
 		// codeql [java/spring-disabled-csrf-protection]: CSRF protection is intentionally disabled 
 		// because we use stateless JWT authentication and do not rely on cookies or session-based auth
-		http
-				.csrf(csrf -> csrf.disable())
+		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
