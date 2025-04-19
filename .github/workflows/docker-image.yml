@@ -28,37 +28,36 @@ jobs:
 
       - name: Run Docker container with Spring profile
         run: |
+          docker network create userform-network
           docker run -d \
+            --network userform-network \
             -e SPRING_PROFILES_ACTIVE=prod \
             -p 8080:8080 \
             --name secure-userform-container \
             secure-userform:latest
-          docker logs secure-userform-container 
 
-      - name: Check Docker version
-        run: docker --version
+      - name: List running Docker containers
+        run: docker ps
 
       - name: Wait for the application to start (retry curl)
         run: |
           for i in {1..60}; do
             echo "Attempt $i: Checking if app is up..."
-            if curl --fail http://127.0.0.1:8080/actuator/health; then
+            if curl --fail -v http://127.0.0.1:8080/actuator/health; then
               echo "App is up!"
               exit 0
             fi
-            curl -v http://127.0.0.1:8080/actuator/health  
-            sleep 5
+            sleep 10
           done
           echo "App failed to start within expected time."
           exit 1
 
       - name: Print health check result
-        run: curl http://127.0.0.1:8080/actuator/health
+        run: curl -v http://127.0.0.1:8080/actuator/health
 
       - name: Get Docker container logs
         run: |
-          docker ps -a  # Verifica todos os contêineres
-          docker logs secure-userform-container 
+          docker logs secure-userform-container
 
       - name: Check Docker daemon status
         run: sudo systemctl status docker
