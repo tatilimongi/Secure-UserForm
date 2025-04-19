@@ -29,5 +29,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t secure-userform-test .
 
+      - name: Set up Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml build
+          docker-compose -f docker-compose.yml up -d
+
       - name: Verify image works (optional)
-        run: docker run --rm secure-userform-test java -version
+        run: |
+          curl --fail http://localhost:8080/actuator/health || exit 1
+
+      - name: Tear down Docker Compose
+        run: docker-compose down
