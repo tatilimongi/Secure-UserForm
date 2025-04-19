@@ -26,22 +26,23 @@ jobs:
       - name: Build Docker image
         run: docker build -t secure-userform:latest .
 
+      - name: Create a custom Docker network
+        run: docker network create --driver bridge my-network
+
       - name: Run Docker container with Spring profile
         run: |
           docker run -d \
             -e SPRING_PROFILES_ACTIVE=prod \
             -p 8080:8080 \
             --name secure-userform-container \
+            --network my-network \
             secure-userform:latest
-
-      - name: Check Docker version
-        run: docker --version
 
       - name: Wait for the application to start (retry curl)
         run: |
           for i in {1..60}; do
             echo "Attempt $i: Checking if app is up..."
-            if curl --fail http://host.docker.internal:8080/actuator/health; then
+            if curl --fail http://127.0.0.1:8080/actuator/health; then
               echo "App is up!"
               exit 0
             fi
@@ -51,7 +52,7 @@ jobs:
           exit 1
 
       - name: Print health check result
-        run: curl http://host.docker.internal:8080/actuator/health
+        run: curl http://127.0.0.1:8080/actuator/health
 
       - name: Get Docker container logs
         run: |
