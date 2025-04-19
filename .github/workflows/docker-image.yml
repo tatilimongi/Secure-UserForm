@@ -28,11 +28,10 @@ jobs:
 
       - name: Run Docker container with Spring profile
         run: |
-          docker run -d --rm \
+          docker run -d \
             -e SPRING_PROFILES_ACTIVE=prod \
             -p 8080:8080 \
             --name secure-userform-container \
-            --network host \
             secure-userform:latest
 
       - name: Wait for the application to start (retry curl)
@@ -50,3 +49,6 @@ jobs:
 
       - name: Print health check result
         run: curl http://localhost:8080/actuator/health
+
+      - name: Check Docker daemon status
+        run: sudo systemctl status docker
