@@ -34,11 +34,14 @@ jobs:
             --name secure-userform-container \
             secure-userform:latest
 
+      - name: Check Docker version
+        run: docker --version
+
       - name: Wait for the application to start (retry curl)
         run: |
-          for i in {1..30}; do
+          for i in {1..60}; do
             echo "Attempt $i: Checking if app is up..."
-            if curl --fail http://localhost:8080/actuator/health; then
+            if curl --fail http://host.docker.internal:8080/actuator/health; then
               echo "App is up!"
               exit 0
             fi
@@ -48,7 +51,12 @@ jobs:
           exit 1
 
       - name: Print health check result
-        run: curl http://localhost:8080/actuator/health
+        run: curl http://host.docker.internal:8080/actuator/health
+
+      - name: Get Docker container logs
+        run: |
+          docker ps -a
+          docker logs secure-userform-container
 
       - name: Check Docker daemon status
         run: sudo systemctl status docker
