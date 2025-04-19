@@ -30,8 +30,8 @@ public class SecurityConfig {
 		UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
 		corsSource.registerCorsConfiguration("/**", corsConfig);
 
-		// CSRF token repository set to Null to bypass CSRF checks when using stateless JWT auth
-		http.csrf(csrf -> csrf.csrfTokenRepository(new org.springframework.security.web.csrf.NullCsrfTokenRepository()))
+		// codeql [java/spring-disabled-csrf-protection]: Justified - using stateless JWT authentication
+		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
