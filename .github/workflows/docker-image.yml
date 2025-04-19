@@ -32,6 +32,7 @@ jobs:
             -e SPRING_PROFILES_ACTIVE=prod \
             -p 8080:8080 \
             --name secure-userform-container \
+            --network host \
             secure-userform:latest
 
       - name: Wait for the application to start (retry curl)
