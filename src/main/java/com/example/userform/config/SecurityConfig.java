@@ -33,7 +33,7 @@ public class SecurityConfig {
 		// codeql [java/spring-disabled-csrf-protection]: Justified - using stateless JWT authentication
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html").permitAll()
+						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html", "/actuator/health").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 						.anyRequest().authenticated()
 				)

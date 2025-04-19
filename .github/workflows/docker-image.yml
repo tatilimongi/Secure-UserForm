@@ -7,9 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-run:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -24,14 +23,24 @@ jobs:
       - name: Build project with Maven
         run: mvn clean package -DskipTests
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build Docker image
-        run: docker build -t secure-userform-test .
+        run: docker build -t secure-userform:latest .
 
-      - name: Verify image works (optional)
+      - name: Run Docker container with Spring profile
         run: |
-          echo "Rodando container apenas para verificar se sobe com Java"
-          docker run --rm secure-userform-test java -version
-        timeout-minutes: 2
+          docker run -d --rm \
+            -e SPRING_PROFILES_ACTIVE=prod \
+            -p 8080:8080 \
+            --name secure-userform-container \
+            secure-userform:latest
+
+      - name: Wait for the application to start
+        run: |
+          echo "Waiting for the app to be ready..."
+          sleep 20
+
+      - name: Verify the application is running
+        run: curl --fail http://localhost:8080/actuator/health || exit 1
+
+      - name: Print health check result
+        run: curl http://localhost:8080/actuator/health
