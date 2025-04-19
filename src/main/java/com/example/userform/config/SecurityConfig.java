@@ -30,6 +30,8 @@ public class SecurityConfig {
 		UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
 		corsSource.registerCorsConfiguration("/**", corsConfig);
 
+		// CSRF protection is disabled because we use stateless JWT authentication
+		// and do not rely on cookies or session-based auth
 		http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
