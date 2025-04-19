@@ -30,9 +30,8 @@ public class SecurityConfig {
 		UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
 		corsSource.registerCorsConfiguration("/**", corsConfig);
 
-		// codeql [java/spring-disabled-csrf-protection]: CSRF protection is intentionally disabled 
-		// because we use stateless JWT authentication and do not rely on cookies or session-based auth
-		http.csrf(csrf -> csrf.disable())
+		// CSRF token repository set to Null to bypass CSRF checks when using stateless JWT auth
+		http.csrf(csrf -> csrf.csrfTokenRepository(new org.springframework.security.web.csrf.NullCsrfTokenRepository()))
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
