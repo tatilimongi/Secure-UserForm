@@ -13,6 +13,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
 	// codeql [java/unreachable-handler-method]: Justified - Spring instantiates this class automatically via @RestControllerAdvice
+	@SuppressWarnings("unused")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();
