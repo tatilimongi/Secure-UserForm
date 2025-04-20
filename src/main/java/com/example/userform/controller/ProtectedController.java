@@ -25,7 +25,7 @@ public class ProtectedController {
 	@GetMapping("/admin")
 	public ResponseEntity<String> adminOnly(HttpServletRequest request) {
 		String role = (String) request.getAttribute("role");
-		if (role == null || !"ADMIN".equalsIgnoreCase(role)) {
+		if (!"ADMIN".equalsIgnoreCase(role)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: ADMIN only");
 		}
 		return ResponseEntity.ok("Welcome, Admin!");
@@ -34,7 +34,7 @@ public class ProtectedController {
 	@GetMapping("/user")
 	public ResponseEntity<String> userOrAdmin(HttpServletRequest request) {
 		String role = (String) request.getAttribute("role");
-		if (role == null || (!"USER".equalsIgnoreCase(role) && !"ADMIN".equalsIgnoreCase(role))) {
+		if ((!"USER".equalsIgnoreCase(role) && !"ADMIN".equalsIgnoreCase(role))) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: USER or ADMIN only");
 		}
 		return ResponseEntity.ok("Welcome, User!");

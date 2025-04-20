@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")

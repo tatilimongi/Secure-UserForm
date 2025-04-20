@@ -2,6 +2,7 @@ package com.example.userform.controller;
 
 import org.springframework.web.bind.annotation.*;
 
+@SuppressWarnings("SameReturnValue")
 @RestController
 @RequestMapping("/")
 public class HelloController {
