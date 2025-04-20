@@ -29,7 +29,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO loginDTO) {
 		try {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
