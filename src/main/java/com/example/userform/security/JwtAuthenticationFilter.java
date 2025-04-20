@@ -21,6 +21,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtUtil jwtUtil;
 	private static final Logger jwtLogger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+	private static final String APPLICATION_JSON = "application/json";
 
 	public JwtAuthenticationFilter(JwtUtil jwtUtil) {
 		this.jwtUtil = jwtUtil;
@@ -32,7 +33,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			@NonNull HttpServletResponse response,
 			@NonNull FilterChain filterChain)
 			throws ServletException, IOException {
+
 		String token = getTokenFromRequest(request);
+
 		if (token != null) {
 			try {
 				if (jwtUtil.isTokenValid(token)) {
@@ -40,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 						String email = jwtUtil.extractEmail(token);
 						jwtLogger.warn("Token expired for user: {}", email);
 						response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-						response.setContentType("application/json");
+						response.setContentType(APPLICATION_JSON);
 						response.getWriter().write("{\"message\": \"Token expired\"}");
 						return;
 					}
@@ -54,18 +57,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					String email = jwtUtil.extractEmail(token);
 					jwtLogger.warn("Invalid token attempt for user: {}", email);
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					response.setContentType("application/json");
+					response.setContentType(APPLICATION_JSON);
 					response.getWriter().write("{\"message\": \"Invalid token\"}");
 					return;
 				}
 			} catch (Exception e) {
 				jwtLogger.error("Error processing token for user: {}", token, e);
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				response.setContentType("application/json");
+				response.setContentType(APPLICATION_JSON);
 				response.getWriter().write("{\"message\": \"Invalid token\", \"error\": \"" + e.getMessage() + "\"}");
 				return;
 			}
 		}
+
 		filterChain.doFilter(request, response);
 	}
 
