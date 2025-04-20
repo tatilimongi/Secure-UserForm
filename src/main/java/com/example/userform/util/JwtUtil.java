@@ -16,10 +16,10 @@ import java.util.Date;
 public class JwtUtil {
 
 	private final String SECRET_KEY = "MySuperSecretKeyThatNeedsToBeVeryLongToBeSecure123!";
-	private final long EXPIRATION_TIME = 1000 * 60 * 60;
 	private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
 	public String generateToken(String email, String role) {
+		long EXPIRATION_TIME = 1000 * 60 * 60;
 		return Jwts.builder()
 				.setSubject(email)
 				.claim("role", role)
