@@ -104,6 +104,7 @@
           message.className = "error";
         }
       } catch (error) {
+        console.error("Error during registration:", error);
         message.textContent = "❌ Error connecting to server.";
         message.className = "error";
       }
