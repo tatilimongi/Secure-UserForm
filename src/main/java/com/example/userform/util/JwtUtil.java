@@ -17,8 +17,8 @@ import java.util.Date;
 public class JwtUtil {
 
 
-	private final String secretKey = "MySuperSecretKeyThatNeedsToBeVeryLongToBeSecure123!";
-	private final Key key = Keys.hmacShaKeyFor(secretKey.getBytes());
+	private static final String secretKey = "MySuperSecretKeyThatNeedsToBeVeryLongToBeSecure123!";
+	private static final Key key = Keys.hmacShaKeyFor(secretKey.getBytes());
 
 	public String generateToken(String email, String role) {
 		long expirationTime = 1000L * 60 * 60;
