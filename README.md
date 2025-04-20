@@ -1,5 +1,25 @@
 # Secure User Form 🔒
 
+![Java](https://img.shields.io/badge/Java-11-blue.svg)
+[![Dependencies](https://camo.githubusercontent.com/60542289bb77c8a7abdef445f59b0d4f233aebe94359936c96b00642d4da3fc9/68747470733a2f2f696d672e736869656c64732e696f2f6c6962726172696573696f2f6769746875622f41505452532f6170747273)](https://libraries.io/github/tatilimongi/Secure-UserForm)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/tatilimongi/Secure-UserForm.svg)](https://github.com/tatilimongi/Secure-UserForm/graphs/commit-activity)
+[![License](https://img.shields.io/github/license/tatilimongi/Secure-UserForm)](https://github.com/tatilimongi/Secure-UserForm/blob/main/LICENSE)
+[![Issues](https://img.shields.io/github/issues/tatilimongi/Secure-UserForm.svg)](https://github.com/tatilimongi/Secure-UserForm/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/tatilimongi/Secure-UserForm.svg)](https://github.com/tatilimongi/Secure-UserForm/pulls)
+![Spring Boot Version](https://img.shields.io/badge/Spring%20Boot-v3.4.4-brightgreen)
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ca2206b5ea8640c78e847ca4985ddff2)](https://app.codacy.com/gh/tatilimongi/Secure-UserForm/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![CodeQL](https://github.com/tatilimongi/Secure-UserForm/workflows/CodeQL/badge.svg)](https://github.com/tatilimongi/Secure-UserForm/actions?query=workflow%3ACodeQL)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=bugs)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=tatilimongi_Secure-UserForm&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=tatilimongi_Secure-UserForm)
+
 ## Project Overview 🚀
 
 **Secure User Form** is a web application designed to demonstrate best practices in secure web development. This project focuses on building a user authentication system with a strong emphasis on security, using JWT (JSON Web Tokens) for session management, secure password storage, and input validation.
@@ -21,35 +41,35 @@ Developed as part of a **Secure Development** course, this application aims to i
 
 ## Technologies Used 🛠️
 
-- **Frontend**:
+- **Frontend**
   - HTML, CSS, JavaScript (for creating the user interface and interactions)
   - **JWT** for secure authentication and authorization
   - **Fetch API** to make secure HTTP requests
 
-- **Backend**:
+- **Backend**
   - **Spring Boot** (Java) for building the backend RESTful API
   - **JWT** for token-based authentication
   - **Spring Security** for securing endpoints and managing user sessions
 
-- **Security Features**:
+- **Security Features**
   - 🛡️ **CSRF Protection**: Disabled for token-based authentication, handled by JWT.
   - 🔐 **Password Security**: Passwords are hashed using **BCrypt** for secure storage.
   - 🌍 **HTTPS**: Ensures secure communication between the client and server.
   - 🌍 **CORS Configuration**: Allows cross-origin requests only from trusted domains.
 
-- **Session Management**:
+- **Session Management**
   - JWT tokens with expiration to ensure secure and controlled sessions.
 
-- **Logging and Monitoring**:
+- **Logging and Monitoring**
   - Basic audit logs for monitoring authentication and access events.
 
-- **Docker**:
+- **Docker**
   - **Dockerfile**: Configured to build and run the application in a container.
   - **Docker Compose**: Defines and manages services needed for the app.
 
 ## Setup Instructions ⚙️
 
-To get the project running locally, follow these steps:
+To get the project running locally, follow these steps
 
 ### 1. Clone the repository:
 
@@ -58,37 +78,37 @@ git clone https://github.com/tatilimongi/Secure-UserForm.git
 cd Secure-UserForm
 ```
 
-### 2. Install dependencies:
+### 2. Install dependencies
 
 - Ensure that you have **Java** and **Maven** installed for the backend (Spring Boot).
 - The frontend can be run directly from your browser by opening the HTML, CSS, and JavaScript files.
 
-### 3. Run the application:
+### 3. Run the application
 
-- **Backend**:
+- **Backend**
     - Navigate to the backend directory and run the Spring Boot application:
     ```bash
     mvn spring-boot:run
     ```
 
-- **Frontend**:
+- **Frontend**
     - Open the `index.html` in your browser to interact with the application.
 
-### 4. API endpoints:
+### 4. API endpoints
 
 - **POST /auth/login**: User login (returns JWT token on success)
 - **POST /auth/register**: User registration (you need to register first)
 - **GET /welcome**: Secure user dashboard (requires JWT token for authentication)
 
-### 5. Testing:
+### 5. Testing
 
 Use tools like **Postman** or **Insomnia** to test the API endpoints.
 
-#### **User Registration**:
+#### **User Registration**
 
 Before logging in, you need to register a user. Send a **POST** request to `http://localhost:8080/register` with the following JSON body:
 
-**Example 1** (Admin User):
+**Example 1** (Admin User)
 ```json
 {
   "name": "Tatiana",
@@ -98,7 +118,7 @@ Before logging in, you need to register a user. Send a **POST** request to `http
 }
 ```
 
-**Example 2** (Regular User):
+**Example 2** (Regular User)
 ```json
 {
   "name": "Tatiana",
@@ -108,7 +128,7 @@ Before logging in, you need to register a user. Send a **POST** request to `http
 }
 ```
 
-#### **User Login**:
+#### **User Login**
 
 After registering, send a **POST** request to `http://localhost:8080/auth/login` with the following JSON body:
 
@@ -121,35 +141,35 @@ After registering, send a **POST** request to `http://localhost:8080/auth/login`
 
 Upon success, you will receive a JWT token.
 
-#### **Access the Secure Dashboard**:
+#### **Access the Secure Dashboard**
 
-Once logged in, you can access the secure user dashboard by sending a **GET** request to `http://localhost:8080/welcome` with the **Authorization** header:
+Once logged in, you can access the secure user dashboard by sending a **GET** request to `http://localhost:8080/welcome` with the **Authorization** header
 
 ```
 Bearer <JWT_TOKEN>
 ```
 Replace `<JWT_TOKEN>` with the token you received during login.
 
-#### Docker Setup:
+#### Docker Setup
 
-1. **Build the Docker image**:
-   - From the project directory, run:
+1. **Build the Docker image**
+   - From the project directory, run
    ```bash
    docker-compose build
    ```
 
-2. **Start the application with Docker**:
-   - To start the application in a container, use:
+2. **Start the application with Docker**
+   - To start the application in a container, use
    ```bash
    docker-compose up
    ```
 
-3. **Access the application**:
+3. **Access the application**
    - Once the containers are running, you can access the frontend at `http://localhost:8080`.
 
 ## Security Focus 🛡️
 
-This project emphasizes the following security aspects:
+This project emphasizes the following security aspects
 
 1. 🔑 **Authentication Security**: Ensures secure login with token-based authentication using JWT.
 2. 🔐 **Authorization**: Restricts access to resources based on user roles (RBAC) and custom policies (PBAC) defined in JWT claims.
@@ -160,7 +180,7 @@ This project emphasizes the following security aspects:
 
 ## Future Improvements 🌱
 
-While the application covers the essentials of secure authentication, there are several potential areas for future enhancement:
+While the application covers the essentials of secure authentication, there are several potential areas for future enhancement
 
 - 🔌 **OAuth 2.0 Integration**: Allow users to authenticate via third-party services (Google, Facebook, etc.).
 - 📧 **Email Verification**: Implement email verification during the registration process to ensure valid user emails.
