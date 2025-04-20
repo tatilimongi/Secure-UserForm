@@ -13,11 +13,13 @@ import java.time.LocalTime;
 @CrossOrigin(origins = "*")
 public class ProtectedController {
 
+	private static final String ADMIN_ROLE = "ADMIN";
+
 	@GetMapping("/working-hours")
 	public ResponseEntity<String> businessHoursOnly(HttpServletRequest request) {
 		String role = (String) request.getAttribute("role");
 		int hour = LocalTime.now().getHour();
-		if (!"ADMIN".equalsIgnoreCase(role) || hour < 9 || hour > 18) {
+		if (!ADMIN_ROLE.equalsIgnoreCase(role) || hour < 9 || hour > 18) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access allowed only during business hours");
 		}
 		return ResponseEntity.ok("You're in business hours, welcome!");
@@ -26,7 +28,7 @@ public class ProtectedController {
 	@GetMapping("/admin")
 	public ResponseEntity<String> adminOnly(HttpServletRequest request) {
 		String role = (String) request.getAttribute("role");
-		if (!"ADMIN".equalsIgnoreCase(role)) {
+		if (!ADMIN_ROLE.equalsIgnoreCase(role)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: ADMIN only");
 		}
 		return ResponseEntity.ok("Welcome, Admin!");
@@ -35,7 +37,7 @@ public class ProtectedController {
 	@GetMapping("/user")
 	public ResponseEntity<String> userOrAdmin(HttpServletRequest request) {
 		String role = (String) request.getAttribute("role");
-		if ((!"USER".equalsIgnoreCase(role) && !"ADMIN".equalsIgnoreCase(role))) {
+		if (!"USER".equalsIgnoreCase(role) && !ADMIN_ROLE.equalsIgnoreCase(role)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied: USER or ADMIN only");
 		}
 		return ResponseEntity.ok("Welcome, User!");
