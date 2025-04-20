@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/protected")
 @CrossOrigin(origins = "*")

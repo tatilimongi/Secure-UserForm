@@ -2,6 +2,7 @@ package com.example.userform.dto;
 
 import jakarta.validation.constraints.*;
 
+@SuppressWarnings("unused")
 public class UserDTO {
 
 	@NotBlank(message = "Name is required")

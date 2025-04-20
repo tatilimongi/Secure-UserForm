@@ -16,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import org.slf4j.Logger;
 
+@SuppressWarnings("unused")
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
