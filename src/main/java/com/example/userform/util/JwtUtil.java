@@ -20,7 +20,7 @@ public class JwtUtil {
 	private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
 	public String generateToken(String email, String role) {
-		long EXPIRATION_TIME = 1000 * 60 * 60;
+		long EXPIRATION_TIME = 1000L * 60 * 60;
 		return Jwts.builder()
 				.setSubject(email)
 				.claim("role", role)
