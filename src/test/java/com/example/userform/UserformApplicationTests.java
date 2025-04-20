@@ -8,6 +8,6 @@ class UserformApplicationTests {
 
 	@Test
 	void contextLoads() {
+		throw new UnsupportedOperationException("Test not yet implemented");
 	}
-
 }
