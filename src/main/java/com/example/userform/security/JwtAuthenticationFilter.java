@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 import org.slf4j.Logger;
 
@@ -21,7 +20,7 @@ import org.slf4j.Logger;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtUtil jwtUtil;
-	private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+	private static final Logger jwtLogger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
 	public JwtAuthenticationFilter(JwtUtil jwtUtil) {
 		this.jwtUtil = jwtUtil;
@@ -33,46 +32,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			@NonNull HttpServletResponse response,
 			@NonNull FilterChain filterChain)
 			throws ServletException, IOException {
-
-
 		String token = getTokenFromRequest(request);
-
 		if (token != null) {
 			try {
 				if (jwtUtil.isTokenValid(token)) {
 					if (jwtUtil.isTokenExpired(token)) {
 						String email = jwtUtil.extractEmail(token);
-						logger.warn("Token expired for user: {}", email);
+						jwtLogger.warn("Token expired for user: {}", email);
 						response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 						response.setContentType("application/json");
 						response.getWriter().write("{\"message\": \"Token expired\"}");
 						return;
 					}
-
 					String role = jwtUtil.extractRole(token);
 					request.setAttribute("role", role);
-
 					Authentication authentication = jwtUtil.getAuthentication(token);
 					SecurityContextHolder.getContext().setAuthentication(authentication);
 					String email = jwtUtil.extractEmail(token);
-					logger.info("Successful authentication for user: {}", email);
+					jwtLogger.info("Successful authentication for user: {}", email);
 				} else {
 					String email = jwtUtil.extractEmail(token);
-					logger.warn("Invalid token attempt for user: {}", email);
+					jwtLogger.warn("Invalid token attempt for user: {}", email);
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					response.setContentType("application/json");
 					response.getWriter().write("{\"message\": \"Invalid token\"}");
 					return;
 				}
 			} catch (Exception e) {
-				logger.error("Error processing token for user: {}", token, e);
+				jwtLogger.error("Error processing token for user: {}", token, e);
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				response.setContentType("application/json");
 				response.getWriter().write("{\"message\": \"Invalid token\", \"error\": \"" + e.getMessage() + "\"}");
 				return;
 			}
 		}
-
 		filterChain.doFilter(request, response);
 	}
 
