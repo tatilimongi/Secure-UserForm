@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,20 +32,18 @@ public class SecurityConfig {
 		corsSource.registerCorsConfiguration("/**", corsConfig);
 
 		// codeql [java/spring-disabled-csrf-protection]: Justified - using stateless JWT authentication
-		http.csrf(csrf -> csrf.disable())
+		http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/", "/index.html", "/login.html", "/auth/login", "/register", "/welcome.html", "/actuator/health").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 						.anyRequest().authenticated()
 				)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-				.formLogin(form -> form.disable())
-				.httpBasic(httpBasic -> httpBasic.disable())
+				.formLogin(AbstractHttpConfigurer::disable)
+				.httpBasic(AbstractHttpConfigurer::disable)
 				.cors(cors -> cors.configurationSource(corsSource))
 				.exceptionHandling(eh -> eh
-						.authenticationEntryPoint((request, response, authException) -> {
-							response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-						})
+						.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
 				);
 
 		return http.build();
