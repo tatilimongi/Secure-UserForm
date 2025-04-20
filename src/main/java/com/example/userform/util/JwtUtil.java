@@ -12,6 +12,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 @Component
 public class JwtUtil {
 
