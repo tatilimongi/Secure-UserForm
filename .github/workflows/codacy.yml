@@ -27,7 +27,7 @@ jobs:
         run: mvn clean install -DskipTests
       
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@4
+        uses: codacy/codacy-analysis-cli-action@v4
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           verbose: true
