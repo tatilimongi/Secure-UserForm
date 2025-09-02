@@ -32,9 +32,8 @@ public class JwtUtil {
 
 	public boolean isTokenExpired(String token) {
 		try {
-			Date expirationDate = Jwts.parserBuilder()
+			Date expirationDate = Jwts.parser()
 					.setSigningKey(key)
-					.build()
 					.parseClaimsJws(token)
 					.getBody()
 					.getExpiration();
@@ -46,18 +45,16 @@ public class JwtUtil {
 	}
 
 	public String extractRole(String token) {
-		return Jwts.parserBuilder()
+		return Jwts.parser()
 				.setSigningKey(key)
-				.build()
 				.parseClaimsJws(token)
 				.getBody()
 				.get("role", String.class);
 	}
 
 	public String extractEmail(String token) {
-		return Jwts.parserBuilder()
+		return Jwts.parser()
 				.setSigningKey(key)
-				.build()
 				.parseClaimsJws(token)
 				.getBody()
 				.getSubject();
@@ -65,9 +62,8 @@ public class JwtUtil {
 
 	public boolean isTokenValid(String token) {
 		try {
-			Jwts.parserBuilder()
+			Jwts.parser()
 					.setSigningKey(key)
-					.build()
 					.parseClaimsJws(token);
 			return true;
 		} catch (JwtException | IllegalArgumentException e) {
